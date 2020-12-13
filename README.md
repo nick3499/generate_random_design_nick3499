@@ -1,4 +1,7 @@
-# README
+# generate_random_design_nick3499
+Generate random design which displays in terminal emulator
+
+![screen capture](screen_capture.png)
 
 ## Unix Shebang
 
