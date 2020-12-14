@@ -49,7 +49,7 @@ def generate_design():
 {ascii_nums[4][2]}m \x1b[0m']
 
     for i in range(0, 160):
-        color_strings += colors[randrange(1, 5)]
+        color_strings += colors[randrange(0, 5)]
 
     for i in range(0, 40):
         print(color_strings)
