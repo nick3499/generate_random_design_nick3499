@@ -117,7 +117,7 @@ colors = [
     f'\x1b[48;2;{ascii_nums[4][0]};{ascii_nums[4][1]};{ascii_nums[4][2]}m \x1b[0m']
 
 for i in range(0, 160):
-    color_pattern += colors[randrange(1, 5)]
+    color_pattern += colors[randrange(0, 5)]
 
 for i in range(0, 40):
     print(color_pattern)
