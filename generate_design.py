@@ -36,17 +36,11 @@ def generate_design():
 
     # generate color-schemed background
     color_strings = ''
-    colors = [
-        f'\x1b[48;2;{ascii_nums[0][0]};{ascii_nums[0][1]};\
-{ascii_nums[0][2]}m \x1b[0m',
-        f'\x1b[48;2;{ascii_nums[1][0]};{ascii_nums[1][1]};\
-{ascii_nums[1][2]}m \x1b[0m',
-        f'\x1b[48;2;{ascii_nums[2][0]};{ascii_nums[2][1]};\
-{ascii_nums[2][2]}m \x1b[0m',
-        f'\x1b[48;2;{ascii_nums[3][0]};{ascii_nums[3][1]};\
-{ascii_nums[3][2]}m \x1b[0m',
-        f'\x1b[48;2;{ascii_nums[4][0]};{ascii_nums[4][1]};\
-{ascii_nums[4][2]}m \x1b[0m']
+    colors = []
+
+    for i in range(0, 5):
+        colors.append(f'\x1b[48;2;{ascii_nums[i][0]};{ascii_nums[i][1]};\
+{ascii_nums[i][2]}m \x1b[0m')
 
     for i in range(0, 160):
         color_strings += colors[randrange(0, 5)]
