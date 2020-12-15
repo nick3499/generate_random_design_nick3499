@@ -109,12 +109,11 @@ The `try` statement is mainly there to catch and handle a `ValueError` when the 
 
 ```python
 color_pattern = ''
-colors = [
-    f'\x1b[48;2;{ascii_nums[0][0]};{ascii_nums[0][1]};{ascii_nums[0][2]}m \x1b[0m',
-    f'\x1b[48;2;{ascii_nums[1][0]};{ascii_nums[1][1]};{ascii_nums[1][2]}m \x1b[0m',
-    f'\x1b[48;2;{ascii_nums[2][0]};{ascii_nums[2][1]};{ascii_nums[2][2]}m \x1b[0m',
-    f'\x1b[48;2;{ascii_nums[3][0]};{ascii_nums[3][1]};{ascii_nums[3][2]}m \x1b[0m',
-    f'\x1b[48;2;{ascii_nums[4][0]};{ascii_nums[4][1]};{ascii_nums[4][2]}m \x1b[0m']
+    colors = []
+
+    for i in range(0, 5):
+        colors.append(f'\x1b[48;2;{ascii_nums[i][0]};{ascii_nums[i][1]};\
+{ascii_nums[i][2]}m \x1b[0m')
 
 for i in range(0, 160):
     color_pattern += colors[randrange(0, 5)]
@@ -125,9 +124,11 @@ for i in range(0, 40):
 
 The f-string `f'\x1b[48;2;{ascii_nums[0][0]};{ascii_nums[0][1]};{ascii_nums[0][2]}m \x1b[0m'` background color formats a single space. The sequence `48;2;` is for background color modification, followed by `13;40;24`, which sets RGB values, for example.
 
-The first `for` loop interates the `color_pattern += colors[randrange(1, 5)]` instruction which appends a random background-color space to the `color_pattern` attribute. The `randrange(1, 5)` call returns an integer from 1 to 5 which is used to pick a random color index.
+The first `for` loop generates a list which is assigned to `colors` variable. A list of formatted background-colored spaces.
 
-The second `for` loop simply repeats the generated random pattern stored in `color_pattern` to the extent of 40 identical lines.
+The second `for` loop interates the `color_pattern += colors[randrange(1, 5)]` instruction which appends a random background-color space to the `color_pattern` attribute. The `randrange(1, 5)` call returns an integer from 1 to 5 which is used to pick a random color index.
+
+The third `for` loop simply repeats the generated random pattern stored in `color_pattern` to the extent of 40 identical lines.
 
 ## If Block
 
