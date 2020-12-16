@@ -46,11 +46,11 @@ The block keyword `def` starts the definition and organization of the function's
 ```python
 print('\x1b[1;34mEnter hex color\x1b[0m: (example: 50514f) or leave blank')
 
-hex1 = input('hex 1: ').upper()
-hex2 = input('hex 2: ').upper()
-hex3 = input('hex 3: ').upper()
-hex4 = input('hex 4: ').upper()
-hex5 = input('hex 5: ').upper()
+hex1 = input('hex 1: ').upper() or '000000'
+hex2 = input('hex 2: ').upper() or '000000'
+hex3 = input('hex 3: ').upper() or '000000'
+hex4 = input('hex 4: ').upper() or '000000'
+hex5 = input('hex 5: ').upper() or '000000'
 ```
 
 The `input()` builtin function returns a prompt for user input. The following is an example of such input:
@@ -61,8 +61,10 @@ hex 1: 020202
 hex 2: 0d2818
 hex 3: 04471c
 hex 4: 058c42
-hex 5: 16db65
+hex 5: 
 ```
+
+Since the `hex 5:` input was left blank, `hex5` will default to `'000000'`
 
 ## Split Hex Code to Pairs
 
@@ -82,14 +84,11 @@ For example, the hex color code `'058c42'` splits to `['05', '8c', '42']` using 
 
 ```python
 for i in hex_pairs:
-    try:
-        ascii_list = [
-            int(hex_pairs[i][0], 16),
-            int(hex_pairs[i][1], 16),
-            int(hex_pairs[i][2], 16)]
-        ascii_nums.append(ascii_list)
-    except ValueError:
-        ascii_nums.append([0, 0, 0])
+    ascii_list = [
+        int(hex_pairs[i][0], 16),
+        int(hex_pairs[i][1], 16),
+        int(hex_pairs[i][2], 16)]
+    ascii_nums.append(ascii_list)
 ```
 
 Next, the hex pairs are converted to decimal numbers, as demonstrated below:
@@ -103,7 +102,12 @@ Next, the hex pairs are converted to decimal numbers, as demonstrated below:
 66
 ```
 
-The `try` statement is mainly there to catch and handle a `ValueError` when the user leaves an input blank, which defaults to `[0, 0, 0]` or pitch black basically. For example, if the user enters nothing but empty strings, then the generated design becomes a big black rectangle. But that can be a way to test the script, before trying real hex color codes.
+The ASCII value numbers will used for color formatting: `f'\x1b[48;2;5;140;66m \x1b[0m'`.
+
+- `\x1b[` sequence escapes the color formatting.
+- `48;2;` sequence sets formatting to background color.
+- `5;140;66m` sequence sets RGB color values.
+- `\x1b[0m` sequence sets color to default.
 
 ## Generate Design
 
