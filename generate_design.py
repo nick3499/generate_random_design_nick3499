@@ -8,11 +8,12 @@ def generate_design():
     # input hex color codes
     print('\x1b[1;34mEnter hex color\x1b[0m: (example: 50514f) or leave blank')
 
-    hex1 = input('hex 1: ').upper()  # hex color code inputs
-    hex2 = input('hex 2: ').upper()
-    hex3 = input('hex 3: ').upper()
-    hex4 = input('hex 4: ').upper()
-    hex5 = input('hex 5: ').upper()
+    # hex color code inputs
+    hex1 = input('hex 1: ').upper() or '000000'
+    hex2 = input('hex 2: ').upper() or '000000'
+    hex3 = input('hex 3: ').upper() or '000000'
+    hex4 = input('hex 4: ').upper() or '000000'
+    hex5 = input('hex 5: ').upper() or '000000'
 
     # split hex color code into hex pairs
     hex_pairs = {
@@ -25,14 +26,11 @@ def generate_design():
 
     # convert hex pairs to ASCII
     for i in hex_pairs:
-        try:
-            ascii_list = [
-                int(hex_pairs[i][0], 16),
-                int(hex_pairs[i][1], 16),
-                int(hex_pairs[i][2], 16)]
-            ascii_nums.append(ascii_list)
-        except ValueError:
-            ascii_nums.append([0, 0, 0])
+        ascii_list = [
+            int(hex_pairs[i][0], 16),
+            int(hex_pairs[i][1], 16),
+            int(hex_pairs[i][2], 16)]
+        ascii_nums.append(ascii_list)
 
     # generate color-schemed background
     color_strings = ''
