@@ -67,7 +67,7 @@ hex 5:
 
 Since the `hex 5:` input was left blank, `hex5` will default to `'000000'`
 
-# Concatenated Hex Strings
+## Concatenated Hex Strings
 
 ```python
 hex_strs = hex1 + hex2 + hex3 + hex4 + hex5
@@ -91,6 +91,10 @@ for i in range(0, 5):
 
 `n` is used to set the first index point in the long string for the start of each hex pair list. Slice notation is used to separate each 6-character code into three items. For example, the hex color code `'058c42'` splits to `['05', '8c', '42']`, which represents a specific color.
 
+```python
+[['02', '02', '02'], ['0d', '28', '18'], ['04', '47', '1c'], ['05', '8c', '42'], ['00', '00', '00']]
+```
+
 ## Convert to ASCII
 
 ```python
@@ -109,6 +113,10 @@ Hex pairs are converted to ASCII code decimal numbers, as demonstrated below:
 140
 >>> int('42', 16)
 66
+```
+
+```python
+[[2, 2, 2], [13, 40, 24], [4, 71, 28], [5, 140, 66], [0, 0, 0]]
 ```
 
 The ASCII value numbers will used for color formatting: `f'\x1b[48;2;5;140;66m \x1b[0m'`.
