@@ -18,12 +18,13 @@ The human-readable Unix shebang `#!` translates to the magic number `0x23 0x21`.
 
 ```python
 >>> __doc__
-'Generate random colored background.\nref. https://coolors.co/020202-0d2818-04471c-058c42-16db65'
+'Generate random colored background design.'
 >>> generate_design.__doc__
 'Generate random background design.'
 ```
 
-The `__doc__` string contains the module's documentation, while the `generate_design.__doc__` string contains the function's documentation.
+- `__doc__` string contains module's documentation
+- `generate_design.__doc__` string contains the function's documentation
 
 ## Import
 
@@ -61,37 +62,45 @@ hex 1: 020202
 hex 2: 0d2818
 hex 3: 04471c
 hex 4: 058c42
-hex 5: 
+hex 5:
 ```
 
 Since the `hex 5:` input was left blank, `hex5` will default to `'000000'`
 
-## Split Hex Code to Pairs
+# Concatenated Hex Strings
 
 ```python
-hex_pairs = {
-    'p1': [hex1[:2], hex1[2:4], hex1[4:]],
-    'p2': [hex2[:2], hex2[2:4], hex2[4:]],
-    'p3': [hex3[:2], hex3[2:4], hex3[4:]],
-    'p4': [hex4[:2], hex4[2:4], hex4[4:]],
-    'p5': [hex5[:2], hex5[2:4], hex5[4:]]}
-ascii_nums = []
+hex_strs = hex1 + hex2 + hex3 + hex4 + hex5
 ```
 
-For example, the hex color code `'058c42'` splits to `['05', '8c', '42']` using slice notation. For example, `hex4[2:4]` slices the two middle alphanumeric characters `'8c'` out of `'058c42'`. 
+Hex color code inputs are all concatenated into a single string.
+
+```python
+'0202020d281804471c058c42000000'
+```
+
+## Generate Hex Pair List
+
+```python
+hex_pairs = []
+n = 0
+for i in range(0, 5):
+    hex_pairs.append([hex_strs[n:n+2], hex_strs[n+2:n+4], hex_strs[n+4:n+6]])
+    n += 6
+```
+
+`n` is used to set the first index point in the long string for the start of each hex pair list. Slice notation is used to separate each 6-character code into three items. For example, the hex color code `'058c42'` splits to `['05', '8c', '42']`, which represents a specific color.
 
 ## Convert to ASCII
 
 ```python
-for i in hex_pairs:
-    ascii_list = [
-        int(hex_pairs[i][0], 16),
-        int(hex_pairs[i][1], 16),
-        int(hex_pairs[i][2], 16)]
-    ascii_nums.append(ascii_list)
+ascii_nums = []
+for i in range(0, 5):
+    ascii_nums.append([int(hex_pairs[i][0], 16), int(hex_pairs[i][0], 16),
+        int(hex_pairs[i][0], 16)])
 ```
 
-Next, the hex pairs are converted to decimal numbers, as demonstrated below:
+Hex pairs are converted to ASCII code decimal numbers, as demonstrated below:
 
 ```python
 >>> int('05', 16)
@@ -112,18 +121,16 @@ The ASCII value numbers will used for color formatting: `f'\x1b[48;2;5;140;66m \
 ## Generate Design
 
 ```python
-color_pattern = ''
-    colors = []
+colors = []  # color scheme strings
+for i in range(0, 5):
+    colors.append(f'\x1b[48;2;{ascii_nums[i][0]};{ascii_nums[i][1]};{ascii_nums[i][2]}m \x1b[0m')
 
-    for i in range(0, 5):
-        colors.append(f'\x1b[48;2;{ascii_nums[i][0]};{ascii_nums[i][1]};\
-{ascii_nums[i][2]}m \x1b[0m')
-
+color_strings = ''
 for i in range(0, 160):
-    color_pattern += colors[randrange(0, 5)]
+    color_strings += colors[randrange(0, 5)]
 
 for i in range(0, 40):
-    print(color_pattern)
+    print(color_strings)
 ```
 
 The f-string `f'\x1b[48;2;{ascii_nums[0][0]};{ascii_nums[0][1]};{ascii_nums[0][2]}m \x1b[0m'` background color formats a single space. The sequence `48;2;` is for background color modification, followed by `13;40;24`, which sets RGB values, for example.
@@ -142,4 +149,3 @@ if __name__ == '__main__':
 ```
 
 The final `if` block executes the `generate_design()` method of the script runs as a standalone app. For example, if this app was imported into another app, its `__name__` would no longer be `__main__`, so `generate_design()` would not execute unless it was called.
-
